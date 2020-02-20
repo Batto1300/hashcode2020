@@ -57,7 +57,7 @@ def top_scoring(books, books_scores, n):
 
             if books_scores[i,1] in books:
 
-                top_books[count] = b[books_scores[i,1]]
+                top_books[count] = top_books[books_scores[i,1]]
 
                 count += 1
 
