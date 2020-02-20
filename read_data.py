@@ -36,5 +36,15 @@ def _read_library(reader):
 def _read_books_in_library(reader):
     return set(next(reader))
 
+
+def save_csv(list_, file_name='result.txt'):
+    writer = csv.writer(open(file_name,'w'),delimiter=' ')
+    n_libs = len(list_)
+    writer.writerow(str(n_libs))
+    for index_, order in list_:
+        writer.writerow([index_, len(order)])
+        writer.writerow(order)
+
 if __name__ == "__main__":
-    res = read_csv()
+    #res = read_csv("/Users/tommaso/hashcode2020/f_libraries_of_the_world.txt")
+    save_csv([(3,[2,3,4,5]),(3,[3,5,6])])
