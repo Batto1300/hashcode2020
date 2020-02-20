@@ -27,14 +27,14 @@ def _read_header(reader):
     return int(n_books_total), int(n_libraries), int(days_for_scanning)
 
 def _read_books_scores(reader):
-    return np.array(list(next(reader)), dtype=int)
+    return np.array(list(map(int,next(reader))), dtype=int)
 
 def _read_library(reader):
     n_books_library, signup_process_len, ship_capacity = next(reader)
-    return n_books_library, signup_process_len, ship_capacity
+    return int(n_books_library), int(signup_process_len), int(ship_capacity)
 
 def _read_books_in_library(reader):
-    return set(next(reader))
+    return set(map(int,next(reader)))
 
 
 def save_csv(list_, file_name='result.txt'):
