@@ -45,21 +45,6 @@ def wrapScore(library, d_slack, scanned_books, books_scores):
 
 
 
-def top_scoring(books, books_scores, n):
-
-    top_books = np.array(n)
-
-    count = 0
-    
-    for i in range(len(books_scores)):
-
-        while count < n:
-
-            if books_scores[i,1] in books:
-
-                top_books[count] = top_books[books_scores[i,1]]
-
-                count += 1
 
 
 
