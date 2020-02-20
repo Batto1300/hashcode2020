@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+result.txt
+f_libraries_of_the_world.txt
