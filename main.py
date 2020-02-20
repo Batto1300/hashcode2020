@@ -6,6 +6,8 @@ def run(filename):
 
     n_books_total, n_libraries, D, books_scores, libraries = Library.read_csv(filename)
 
+    ordered_b_scores = np.sort(np.array([books_scores], [list(range(len(books_scores)))], axis = 1))
+
     d = 0
 
     d_slack = [D - library.n_books / library.ship - library.signup_process for library in libraries] 
@@ -14,17 +16,19 @@ def run(filename):
 
     scanned_books = set()
 
-    library_scores = np.zeros(n_libraries) # store score of each library
-
     while d < D:
 
-        to_scans, scores = wrapScore(libraries, d_slack, scanned_books, books_scores)
+        to_scans, library_scores = wrapScore(libraries, d_slack, scanned_books, books_scores)
 
         chosen_library = np.arg_max(library_scores)[0] # max index over library score array array 
 
-        scanned_books.add(chosen_library.books) # check!
+        libraries[chosen_library].n_books = set()
 
-        submission.append((chosen_library,to_scans[chosen_library]))
+        to_scan = to_scans[chosen_library]
+
+        scanned_books.add(to_scan) # check!
+
+        submission.append((chosen_library,to_scan))
 
         d = d + chosen_library.signup_process
 
@@ -39,24 +43,17 @@ def wrapScore(library, d_slack, scanned_books, books_scores):
 
             return adj_score
         else:
-            
-            return functools.reduce(lambda x, y: books_scores[x] + books_scores[y]  ,library.books - scanned_books) / library.signup_process
-
-
-
-
-
-
-
+            to_scan = library.books-scanned_books
+            return to_scan, functools.reduce(lambda x, y: books_scores[x] + books_scores[y]  ,to_scan) / library.signup_process
 
 
 def adj_score(library):
+    to_check = library.books-scanned_books
+    to_scan = top_scoring(to_check, library.ship*(D-d-library.signup_process))
+    score = functools.reduce(lambda x, y: books_scores[x] + books_scores[y]  ,to_scan) / library.signup_process
+    return to_scan, score
 
-    pass
-
-
-
-    
+def    
 
 
 if __name__ == "__main__":
