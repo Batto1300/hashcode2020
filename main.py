@@ -43,8 +43,31 @@ def wrapScore(library, d_slack, scanned_books, books_scores):
 
             return adj_score
         else:
-            to_scan = library.books-scanned_books
-            return to_scan, functools.reduce(lambda x, y: books_scores[x] + books_scores[y]  ,to_scan) / library.signup_process
+            
+            return functools.reduce(lambda x, y: books_scores[x] + books_scores[y]  ,library.books - scanned_books) / library.signup_process
+
+
+
+
+def top_scoring(books, books_scores, n):
+
+    top_books = np.array(n)
+
+    count = 0
+    
+    for i in range(len(books_scores)):
+
+        while count < n:
+
+            if books_scores[i,1] in books:
+
+                top_books[count] = b[books_scores[i,1]]
+
+                count += 1
+
+
+
+
 
 
 def adj_score(library):
